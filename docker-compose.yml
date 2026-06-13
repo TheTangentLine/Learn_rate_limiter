@@ -1,0 +1,27 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "8080:8080"
+
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+    ports:
+      - "8081:8081"
+    environment:
+      BACKEND_URL: http://server:8080
+      REDIS_ADDR: redis:6379
+      RATE_LIMIT: "10"
+      WINDOW_SEC: "60"
+    depends_on:
+      - redis
+      - server
