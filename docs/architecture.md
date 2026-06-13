@@ -1,11 +1,5 @@
 # System Architecture
 
-**Author:** Minh Kha Truong  
-**Status:** Implemented  
-**Tech Stack:** Go, Redis, Docker Compose, Kubernetes (planned)
-
----
-
 ## 1. Overview
 
 This system protects a backend API from excessive traffic using a **distributed rate limiter**. A Gateway intercepts incoming requests, checks limits against Redis, and either rejects the request (`HTTP 429`) or forwards it to the Backend API. Redis ensures all Gateway instances share a synchronized view of client usage.
